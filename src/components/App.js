@@ -9,15 +9,12 @@ import Header from './ui/Header';
 import theme from "./ui/Theme";
 import Users from './Users';
 import LogHeaders from './ui/LogHeader'
-// import './ui/App.css'
 import './ui/History.css'
 import LandingPage from './LandingPage';
 import ContactUs from './ContactUs';
 import AboutUs from './AboutUs';
 import Login from './Login'
 import {fire } from '../firebase'
-import firebase from '@firebase/app';
-// import SignIn from './login2'
 require('firebase/auth');
 
 
@@ -27,52 +24,13 @@ function App() {
       const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [emailerror, setEmailerror] = useState('');
-    const [passworderror, setPassworderror] = useState('');
-    const [hasAccount, setHasAccount] = useState(false);
 
         const ClearInputs = () =>{
         setEmail("");
         setPassword("");
 
     }
-    
-    const HandleLogin = () =>{
-        fire.auth().signInWithEmailAndPassword(email, password)
-        .catch(err => {
-            switch(err.code){
-                case "auth/invalid-email":
-                case "auth/user-disabled":
-                case "auth/user-not-found":
-                    setEmailerror(err.message);
-                    break;
-                    case "auth/wrong-password":
-                        setPassworderror(err.message);
-                        break;
-            }
-        })
-    }
 
-    const HandleSignup = () =>{
-        fire.auth().createUserWithEmailAndPassword(email, password)
-        .catch(err => {
-            switch(err.code){
-                case "auth/invalid-email":
-            case "auth/email-already-in-use":
-                    setEmailerror(err.message);
-                    break;
-                    case "auth/weak-password":
-                        setPassworderror(err.message);
-                        break;
-            }
-        })
-    }
-
-
-    const HandleLogout = ()  =>{
-        fire.auth().signOut();
-        console.log("logged out");
-    }
 
     const AuthListner =() =>{
         fire.auth().onAuthStateChanged(user => {
@@ -132,7 +90,6 @@ function App() {
           <Route exact path='/contact' component={ContactUs} />
           <Route exact path='/about' component={AboutUs} />
           <Route exact path='/login' component={Login} />
-           {/* <Route exact path='/login2' component={SignIn} /> */}
          
           </Switch>
           {

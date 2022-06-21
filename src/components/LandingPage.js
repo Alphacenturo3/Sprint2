@@ -1,6 +1,10 @@
-import React from 'react';
+import React , {useEffect, useState,} from 'react';
 import { makeStyles, Grid, Typography,useMediaQuery,useTheme ,Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
+import {fire } from '../firebase'
+import firebase from '@firebase/app';
+require('firebase/auth');
 
 
 const useStyles = makeStyles(theme=>({
@@ -19,7 +23,6 @@ const useStyles = makeStyles(theme=>({
         backgroundColor:theme.palette.common.orange,
         height:45,
         width:200,
-        // marginRight:40,
         '&:hover':{
             backgroundColor:theme.palette.secondary.light
         }
@@ -34,7 +37,7 @@ export default function LandingPage(props){
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
     const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-
+      const [user, setUser] = useState('');
 
     // const techOptions = {
     //     loop: true,
@@ -44,6 +47,41 @@ export default function LandingPage(props){
     //       preserveAspectRatio: 'xMidYMid slice'
     //     }
     // }
+
+    const HandleLogout = ()  =>{
+        fire.auth().signOut();
+        
+        swal({
+  title: "Are you sure?",
+  text: "Are you sure that you want to logout?",
+  icon: "warning",
+  dangerMode: true,
+})
+.then(willDelete => {
+  if (willDelete) {
+    swal("LoggedOut!", "You have successfully logged out");
+  }
+});
+setTimeout(function () {
+window.location.pathname = '/';
+}, 1000)
+
+    }
+
+    const AuthListner =() =>{
+        fire.auth().onAuthStateChanged(user => {
+            if(user){
+                
+                setUser(user);
+            }
+            else{
+                setUser("");
+            }
+        })
+    }
+    useEffect(() => {
+        AuthListner();
+    }, [])
 
 
     return(
@@ -86,8 +124,21 @@ export default function LandingPage(props){
                     <Typography variant='body1'  style={{textAlign:'center'}} paragraph align={matchesMD ? 'center' : 'inherit'}>
                     Simpler. Faster. Safer
                     </Typography>
-                    <Grid item align='center' style={{marginBottom:'3em'}}>
-                        <Link to = './Login'>
+                    
+                        <Grid item align='center' style={{marginBottom:'3em'}}>
+                            
+                        {user ? (
+                            
+                        <Button variant='contained' className={classes.estimateButton}  
+                                
+                                style={{color:'black'}}
+                                onClick = {HandleLogout}
+                        >
+                        Logout
+                        </Button>
+                       
+                        ):(
+                             <Link to = './login'>
                         <Button variant='contained' className={classes.estimateButton}  
                                 
                                 style={{color:'black'}}
@@ -95,61 +146,23 @@ export default function LandingPage(props){
                                     props.setValue(3)
                                 }}
                         >
-                        Create New Account
+                            SignUp or Login!
                         </Button>
                         </Link>
+                        )}
+                    
+                    
+                       
                     </Grid>
                     
                     
                     </Grid>
                 </Grid>
             </Grid>
-            {/* <Grid 
-                item 
-                container 
-                direction= 'row' 
-                justifyContent='center'
-                style={{marginTop:'10em' ,marginBottom:'10em'}}
-                className={classes.rowContainer}
-            >
-                <Grid   item 
-                        container 
-                        direction='column' 
-                        md 
-                        style={{maxWidth:'40em'}} 
-                        alignItems='center'
-                >
-                    <Grid item>
-                        <img src='https://image.flaticon.com/icons/png/128/181/181096.png' alt='lightbulb' />
-                    </Grid>
-                </Grid>
-                <Grid item container 
-                        direction='column' 
-                        md 
-                        alignItems='center'
-                        style={{
-                            maxWidth:'40em',
-                            marginBottom:matchesSM ? '10em' : 0,
-                            marginTop:matchesSM ? '10em' : 0
-                        }} 
-                >
-                    <Grid item>
-                        <img src='https://image.flaticon.com/icons/png/128/181/181095.png' alt='stopwatch' />
-                    </Grid>
-                </Grid>
-                <Grid item container 
-                        direction='column' 
-                        md 
-                        style={{maxWidth:'40em'}} 
-                        alignItems='center'
-                >
-                    <Grid item>
-                        <img src='https://image.flaticon.com/icons/png/128/181/181093.png' alt='cash' />
-                    </Grid>
-                </Grid>
-            </Grid> */}
+           
 
         </Grid>
     )
+                            }
 
-}
+                            

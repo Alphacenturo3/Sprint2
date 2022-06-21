@@ -2,9 +2,7 @@ import { Grid ,makeStyles, Typography,useTheme,TextField, Button,useMediaQuery} 
 import React ,{useState} from 'react';
 
 import phoneIcon from "../assests/phone.svg";
-// import emailIcon from "../assests/email.svg";
 import airplane from "../assests/send.svg";
-// import axios from 'axios';
 import { CircularProgress } from '@material-ui/core';
 import { Snackbar } from '@material-ui/core';
 import emailIcon from '../assests/email.svg'
@@ -145,18 +143,12 @@ export default function ContactUs(props){
           },
           body: JSON.stringify(details),
         });
-        // setStatus("Submit");
-        // let result = await response.json();
-        // alert(result.status);
         setLoading(false);
-        // setStatus("Submit");
         setLoading(false);
-        // setOpen(false);
         setName("");
         setEmail("");
         setPhone("");
         setMessage("");
-        // let result = await response.json();
        
         setAlert({ open: true, color: "#4BB543" });
         setAlertMesssage("Message sent successfully!");
@@ -321,7 +313,6 @@ export default function ContactUs(props){
                 item 
                 container 
                 direction={matchesMD ? 'column' : 'row'}
-                // className={classes.background} 
                 alignItems='center'
                 justifyContent={matchesMD ? 'center' : undefined}
                 lg={7}

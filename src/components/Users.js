@@ -1,6 +1,5 @@
-import { Divider, Typography  } from '@material-ui/core';
+import { Divider, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import React ,{useState,useEffect} from 'react';
-import { useMediaQuery,useTheme } from '@material-ui/core';
 import { db } from '../firebase';
 
 

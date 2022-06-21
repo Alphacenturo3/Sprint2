@@ -25,11 +25,11 @@ export default function Footer() {
                     <Toolbar className={classes.center} >
                         <div>
                             <Typography variant="body2" style={{color:'white',textAlign:'center'}}>
-                                    Made By  Ritik Jain
+                                    Made By  US
                             </Typography>
                             <Typography variant="body2" style={{color:'white',textAlign:'center'}}>
                                 {'Copyright © '}
-                                    RJTech.com                   {' '}
+                                    react.com                 {' '}
                                 {new Date().getFullYear()}
                                 {'.'}
                             </Typography>

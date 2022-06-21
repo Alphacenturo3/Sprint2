@@ -1,16 +1,12 @@
 import React, { useState ,useEffect} from 'react';
-import { AppBar, Button,IconButton,List,ListItem, Tab, Tabs} from '@material-ui/core';
+import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, ListItemText, useMediaQuery } from '@material-ui/core';
 import  Toolbar  from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import {useTheme} from '@material-ui/core/styles';
-import { useMediaQuery } from '@material-ui/core';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MenuIcon from '@material-ui/icons/Menu'
-import { ListItemText } from '@material-ui/core';
-import {fire } from '../../firebase'
-import firebase from '@firebase/app';
 require('firebase/auth');
 
 function ElevationScroll(props) {
@@ -152,6 +148,7 @@ export default function Header(props){
         {name:'Create User',link:'/create' ,activeIndex:2},
         
         {name:'All Transcation',link:'/history',activeIndex:3},
+        
       
     ];
     useEffect(() => {
@@ -191,9 +188,6 @@ export default function Header(props){
                             component={Link}
                             to={route.link}
                             label={route.name}
-                            // aria-owns={route.ariaOwns}
-                            // aria-haspopup={route.ariaPopup}
-                            // onMouseOver={route.mouseOver}
                         />
                 ))}
             </Tabs>
@@ -292,7 +286,7 @@ export default function Header(props){
                     >
                     {/* <img alt='company logo' src={logo} className={classes.logo}/> */}
                     </Button>
-                    <button onclick ={HandleLogout}>aljdal</button>
+                    
                  
                   {matches ? drawer : tabs}
                 </Toolbar>
@@ -302,32 +296,3 @@ export default function Header(props){
         </React.Fragment>
     );
 }
-
-
-  {/* <div className="loginContainer">
-        <label>username</label>
-        <input  required value={email} 
-        onChange = {(e) => setEmail(e.target.value)} />
-        <p className='errormsg'>{emailerror}</p>
-        <label >Password</label>
-        <input type="password" required value={password} onChange= 
-        {(e) => setPassword(e.target.value)} />
-        <p className='error'> {passworderror}</p>
-        <div className="btn">
-            {hasAccount ? (
-                <>
-                
-              <button onClick={HandleLogin}>sign in</button>
-              <p>dont have?</p>
-              <span onClick={() => setHasAccount(!hasAccount)}>signup</span>
-                </>
-            ): (
-                <>
-                <button onClick={HandleSignup}>sign up</button>
-              <p>have an account </p>
-              <span onClick={() => setHasAccount(!hasAccount)}>signin</span>
-                </>
-            )}
-        </div>
-        
-    </div>  */}

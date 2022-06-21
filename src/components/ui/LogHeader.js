@@ -56,7 +56,8 @@ const useStyles = makeStyles(theme=>({
     tab:{
         ...theme.typography.tab,
         minWidth:10,
-        marginLeft:'25px',
+        marginLeft:'10px',
+        
     },
     button:{
         ...theme.typography.estimate,
@@ -140,7 +141,10 @@ export default function LogHeaders(props){
    
     const routes = [
         {name:'Home',link:'/',activeIndex:0},
-        {name:'SignIn',link:'/login' ,activeIndex:1},
+        {name:'AboutUs',link:'/about' ,activeIndex:1},
+        {name:'ContactUS',link:'/contact' ,activeIndex:2},
+        {name:'SignIn',link:'/login' ,activeIndex:3},
+        
         
       
     ];
