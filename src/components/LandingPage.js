@@ -39,15 +39,6 @@ export default function LandingPage(props){
     const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
       const [user, setUser] = useState('');
 
-    // const techOptions = {
-    //     loop: true,
-    //     autoplay: true, 
-    //     animationData: technologyAnimation,
-    //     rendererSettings: {
-    //       preserveAspectRatio: 'xMidYMid slice'
-    //     }
-    // }
-
     const HandleLogout = ()  =>{
         fire.auth().signOut();
         
@@ -59,12 +50,14 @@ export default function LandingPage(props){
 })
 .then(willDelete => {
   if (willDelete) {
-    swal("LoggedOut!", "You have successfully logged out");
+    setTimeout(function () {
+window.location.pathname = '/';
+swal("LoggedOut!", "You have successfully logged out");
+}, 1000)
+    
   }
 });
-setTimeout(function () {
-window.location.pathname = '/';
-}, 1000)
+
 
     }
 

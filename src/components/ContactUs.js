@@ -218,10 +218,10 @@ export default function ContactUs(props){
                                     style={{color:theme.palette.common.blue ,fontSize:'1rem'}}    
                                 >
                                
-                                <a href ='mailto:ritikjain2727@gmail.com' 
+                                <a href ='varunbhonsle3@gmail.com' 
                                     style={{textDecoration:'none',color:'inherit'}}
                                 >
-                                    https://github.com/Alphacenturo3/
+                                    test2@gmail.com
                                 </a>
                                 </Typography>
                             </Grid>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles, Grid, Typography,useMediaQuery,useTheme ,Button} from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import { Button,Grid,useTheme,useMediaQuery,makeStyles,Typography,TextField,CircularProgress,Snackbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert'
 import LandingPage from './LandingPage';
@@ -51,18 +51,23 @@ const Login = (props) => {
     
 
 }))
-
-const classes = useStyles();
-
+ const classes = useStyles();
     const theme = useTheme();
-    const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
     const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+    const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
+    const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const userRef = useRef();
+    const errRef = useRef();
+   
      const [value,setValue] = useState(0);
   const [selectedIndex,setSelectedIndex] = useState(0)
       const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [success, setsuccess] = useState(false);
+    const [validuser, setValidUser] = useState(false);
+    const [validpassword, setValidpassword] = useState(false);
     const [emailerror, setEmailerror] = useState('');
     const [passworderror, setPassworderror] = useState('');
     const [hasAccount, setHasAccount] = useState(false);
@@ -75,37 +80,31 @@ const classes = useStyles();
     
 
     
-    const HandleLogin = () =>{
+    const HandleLogin = async () =>{
         
-        fire.auth().signInWithEmailAndPassword(email, password)
-        .catch(err => {
-            setError(true);
+         try {
+    await fire.auth().signInWithEmailAndPassword(email, password);
+  } 
+      catch (err) { 
             switch(err.code){
                 case "auth/invalid-email":
                 case "auth/user-disabled":
                 case "auth/user-not-found":
                     setEmailerror(err.message);
-                    
-                    ClearInputs();
-
+                    swal(err.message)
                     break;
                     case "auth/wrong-password":
                         setPassworderror(err.message);
-                        
+                        swal(err.message);
                         ClearInputs();
                         
                         break;
             }
-        })
-        if( emailerror == ''){
-            swal('successful');
-        
         }
-       
-        else{
-            swal('unsuccessful');
-        }
-    }
+        setTimeout(function () {
+window.location.pathname = '/';
+}, 3000)
+    };
 
     const HandleSignup = () =>{
         fire.auth().createUserWithEmailAndPassword(email, password)
@@ -114,6 +113,7 @@ const classes = useStyles();
                 case "auth/invalid-email":
             case "auth/email-already-in-use":
                     setEmailerror(err.message);
+                    swal(err.message);
                     break;
                     case "auth/weak-password":
                         setPassworderror(err.message);
@@ -121,6 +121,12 @@ const classes = useStyles();
             }
         })
         
+               setTimeout(function () {
+                swal("successs");
+window.location.pathname = '/';
+
+}, 5000)
+    
     }
     const AuthListner =() =>{
         fire.auth().onAuthStateChanged(user => {
@@ -136,7 +142,12 @@ const classes = useStyles();
     useEffect(() => {
         AuthListner();
     }, [])
-
+     useEffect(() => {
+        setValidUser(emailerror);
+    }, [email])
+     useEffect(() => {
+        setValidpassword(passworderror);
+    }, [password])
     // const techOptions = {
     //     loop: true,
     //     autoplay: true, 
@@ -149,71 +160,66 @@ const classes = useStyles();
 
   return (
     
-   
-  
-       <Grid container direction='row'>
-            <Grid item className={classes.rowContainer} style={{marginTop:'1em'}}>
-                <Typography 
-                    variant='h2' 
-                    style={{fontFamily:'Pacifico' }}
-                    align={matchesMD ? 'center' : undefined}
+   <Grid 
+        container 
+        direction='column' 
+        justifyContent='center'
+        style={{
+            marginTop:matchesSM ? '4em'  : matchesMD ? '5em' : undefined,
+            marginBottom: matchesMD ? '5em' : undefined
+        }}
+    >
+        <Grid item>
+            <Grid item container direction='column' style={{alignItems:'center'}}>
+                <Grid item>
+                    <Typography 
+                        variant='h3'
+                        align= 'center'
+                        style={{lineHeight:1}}
+                    >
+                        Login or SignUp
+                    </Typography>
+                </Grid>
+                <Grid 
+                    item 
+                    container
+                    direction='column' 
+                    style={{maxWidth:matchesXS ? '20em' : matchesSM? '25em' :'40em'}}
                 >
-                     Login or Signup
-                </Typography>
-            </Grid>
-            <Grid 
-                item 
-                container 
-                direction={matchesMD ? 'column' : 'row' }
-                className={classes.rowContainer}
-                alignItems='center'
-                style={{marginTop:' 2em',marginBottom:'1.7em'}}
-            >
-                
-
-                <Grid item container direction='column' lg style={{maxWidth:'100em'}}>
-                    <Grid item>
-                    <Typography color = 'black' variant='label'  style={{textAlign:'left'}} paragraph align={matchesMD ? 'left' : 'inherit'}>
-                    Email
-                    </Typography>
-                    </Grid>
-                    <Grid itemitem container direction='column' lg style={{maxWidth:'100em'}}>
-                    <Typography variant='input'  style={{textAlign:'center'}} paragraph align={matchesMD ? 'center' : 'inherit'}>
-                   <input variant = 'input'  className={classes.input}
-                    required value={email} onChange = {(e) => setEmail(e.target.value)} />
-                    </Typography>
-                    </Grid>
-                    <Grid item  container direction='column' lg style={{maxWidth:'100em'}}>
-                    <Typography color = 'black' variant='h5'  style={{textAlign:'center'}} paragraph align={matchesMD ? 'center' : 'inherit'}>
-                    <h5>{emailerror}</h5>
-                    </Typography>
-                    </Grid>
-                    <Typography variant='label'  style={{textAlign:'left'}} paragraph align={matchesMD ? 'right' : 'inherit'}>
-                    Password
-                    </Typography>
-                    </Grid>
-                    <Grid item>
-                    <Typography color = 'black' variant='h5'  style={{textAlign:'center'}} paragraph align={matchesMD ? 'center' : 'inherit'}>
-                    <h5>{passworderror}</h5>
-                    </Typography>
-                    </Grid>
-                    <Grid item>
-                    <Typography variant='input'  style={{textAlign:'left'}} paragraph align={matchesMD ? 'center' : 'inherit'}>
-                   <input type='password'  className={classes.input}
-                   required value={password} onChange= 
-        {(e) => setPassword(e.target.value)} />
-                    </Typography>
-                    </Grid>
-                    <Grid item align='left' style={{marginBottom:'3em'}}>
+                <Grid item style={{marginTop:'2em' ,marginBottom:'0.5em'}}>
+                    <Typography style={{color:theme.palette.common.blue}}>Username</Typography>
+                    <TextField 
+                        id="username" 
+                        variant="outlined"
+                        fullWidth
+                       required value={email} onChange = {(e) => setEmail(e.target.value)}
+                    />
+                    
+                </Grid>
+                <Grid item style={{marginBottom:'0.5em'}}>
+                    <Typography style={{color:theme.palette.common.blue}}>Password</Typography>
+                    <TextField 
+                        id="password"
+                        variant="outlined"
+                        type='password'
+                        fullWidth
+                         required value={password} onChange= 
+        {(e) => setPassword(e.target.value)} 
                         
-                        {hasAccount ? (
+                    />
+                </Grid>
+                
+                
+                
+                <Grid item container justifyContent='center' style={{marginTop:'2em'}}>
+                    {hasAccount ? (
                 <>
                 
               <button  variant='contained' className={classes.estimateButton}  
                                 
-                                style={{color:'blue'}} onClick={HandleLogin}>sign in</button>
+                                style={{color:'blue'}} onClick={HandleLogin}>Login</button>
                 
-              <p>dont have an account click on signup!?</p>
+              <p>dont have an account?  </p>
               <span onClick={() => setHasAccount(!hasAccount)}>signup</span>
                 </>
             ): (
@@ -224,20 +230,23 @@ const classes = useStyles();
                                 style={{color:'blue'}} onClick={HandleSignup}>sign up</button>
                                
 
-              <p>have an account? click on sign in </p>
+              <p>have an account? </p>
               <span onClick={() => setHasAccount(!hasAccount)}>signin</span>
                 </>
             )}
-            
-                       
-                       
-                    </Grid>
-                    
-                    
-                    </Grid>
                 </Grid>
+            </Grid>
+            </Grid>
+        </Grid>
+       
+     
+
+    </Grid>
+    );
+  
     
-  )
-}
+  
+            }
 
 export default Login;
+

@@ -41,7 +41,7 @@ export default function AboutUs(props){
         <Grid container direction='column'>
             <Grid item className={classes.rowContainer} style={{marginTop:matchesMD ? '1em' : '1em'}}>
                 <Typography align='center' variant='h2'>
-                    About Me
+                    About US
                 </Typography>
             </Grid>
             <Grid 
@@ -52,7 +52,7 @@ export default function AboutUs(props){
                 style={{marginTop:'3em'}}
             >
                 <Typography variant='h4' align='center' className={classes.missionStatement}>
-                Sprint 2
+                A Simple Banking Project developed for Sprint2
                 </Typography>
             </Grid>
             <Grid 
@@ -70,26 +70,48 @@ export default function AboutUs(props){
                 </Grid>
                 <Grid item>
                     <Typography variant="body1" paragraph align="center">
-                        Names
+                        Varun U
+                        
                     </Typography>
                     <Typography variant="body1" paragraph align="center">
-                        designations
+                        Vani
+                    </Typography>
+                    <Typography variant="body1" paragraph align="center">
+                        Nanditha
+                    </Typography>
+                    <Typography variant="body1" paragraph align="center">
+                        Harsh Kadam
+                    </Typography>
+                    <Typography variant="body1" paragraph align="center">
+                        Aman Sharma
+                    </Typography>
+                     <Typography variant="body1" paragraph align="center">
+                        Safwana
+                    </Typography>
+                    <Typography variant="body1" paragraph align="center">
+                        Pragathi
+                    </Typography>
+                    <Typography variant="body1" paragraph align="center">
+                        SinduShree
+                    </Typography>
+                    <Typography variant="body1" paragraph align="center">
+                        Neeha Afsana
                     </Typography>
                 </Grid>
                 <Grid item>
                     <Button 
                         style={{color:"black"}}
-                        onClick={()=>window.open("https://github.com/ritik2727", '_blank')}
+                        onClick={()=>window.open("https://github.com/Alphacenturo3", '_blank')}
                         >
                         <GitHub />
                     </Button>
                     <Button style={{color:"black"}} 
-                        onClick={()=>window.open("https://twitter.com/Ritik2727", '_blank')}
+                        onClick={()=>window.open("https://twitter.com/", '_blank')}
                     >
                         <Twitter/>
                     </Button>
                     <Button style={{color:"black"}} 
-                        onClick={()=>window.open("https://www.linkedin.com/in/ritik-jain-3b2208217/", '_blank')}
+                        onClick={()=>window.open("https://www.linkedin.com/", '_blank')}
                     >
                     <LinkedIn/>
                  </Button>

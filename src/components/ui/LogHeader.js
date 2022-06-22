@@ -143,7 +143,7 @@ export default function LogHeaders(props){
         {name:'Home',link:'/',activeIndex:0},
         {name:'AboutUs',link:'/about' ,activeIndex:1},
         {name:'ContactUS',link:'/contact' ,activeIndex:2},
-        {name:'SignIn',link:'/login' ,activeIndex:3},
+       
         
         
       

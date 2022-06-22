@@ -116,7 +116,7 @@ export default function CreateUser(){
             // alert("Details have been saved")
             setLoading(false);
             setAlert({ open: true, color: "#4BB543" });
-            setAlertMesssage("Customer Created Successfully !!");
+            setAlertMesssage("Money Deposited Successfully!!");
         }).catch((err) => { 
             switch(err){
              case "auth/invalid-email":
@@ -159,7 +159,7 @@ export default function CreateUser(){
                         align= 'center'
                         style={{lineHeight:1}}
                     >
-                        Create New User
+                        Deposit
                     </Typography>
                 </Grid>
                 <Grid 

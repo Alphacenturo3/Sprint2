@@ -132,11 +132,7 @@ export default function Header(props){
 
     const [openDrawer,setOpenDrawer] = useState(false)
 
-       const HandleLogout = ()  =>{
-        fire.auth().signOut();
-        console.log("logged out");
-    }
-
+     
     const handleChange = (e,newValue)=>{
         props.setValue(newValue);
     }
@@ -145,7 +141,7 @@ export default function Header(props){
         {name:'Home',link:'/',activeIndex:0},
         {name:'Users',link:'/users',activeIndex:1
         }, 
-        {name:'Create User',link:'/create' ,activeIndex:2},
+        {name:'Deposit',link:'/create' ,activeIndex:2},
         
         {name:'All Transcation',link:'/history',activeIndex:3},
         
